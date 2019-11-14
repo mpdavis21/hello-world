@@ -33,3 +33,31 @@ List Azure account
  
 
  Set-AzContext -Subscription " adfdd4ac-312a-495d-b09c-a5726de07f96"
+
+
+
+
+ 
+provider "aws" {
+  profile    = "default"
+  region     = "us-east-1"
+}
+
+resource "aws_vpc" "marktest" {
+  cidr_block = "10.0.0.0/16"
+}
+
+resource "aws_subnet" "us-east-1a-public" {
+  vpc_id     = "${aws_vpc.main.id}"
+  cidr_block = "10.0.1.0/24"
+}
+
+resource "aws_subnet" "us-east-1b-private" {
+  vpc_id     = "${aws_vpc.main.id}"
+  cidr_block = "10.0.2.0/24"
+  tags = {
+    name = "Main"
+  }
+}
+
+-- INSERT --                                                  1,1           Top
